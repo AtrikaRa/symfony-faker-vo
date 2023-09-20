@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -7,19 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Embeddable]
 class Money
 {
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private int $value;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private string $currency;
-
     public function __construct(
-    )
-    {
+        #[ORM\Column(length: 168, nullable: true)]
+        private readonly ?string $value = "",
+        #[ORM\Column(length: 3, nullable: true)]
+        private readonly ?string $currency = null,
+    ) {
     }
 
     public function __toString(): string
@@ -31,23 +26,14 @@ class Money
         return \trim($money);
     }
 
-    public function getValue(): int
+
+    public function getValue(): ?string
     {
-        return $this->value;
+        return (string) $this->value;
     }
 
-    public function getCurrency(): string
+    public function getCurrency(): ?string
     {
-        return $this->currency;
-    }
-
-    public function setValue(int $value): void
-    {
-        $this->value = $value;
-    }
-
-    public function setCurrency(string $currency): void
-    {
-        $this->currency = $currency;
+        return (string) $this->currency;
     }
 }

@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
-use App\ValueObject\Money;
+use App\Entity\Money;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
@@ -26,12 +26,11 @@ class Product
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private $name = null;
 
-    // #[ORM\Embedded(class: Money::class)]
-    // private Money $price;
+    #[ORM\Embedded(class: Money::class)]
+    private Money $price;
 
     public function __construct()
     {
-        // $this->price = new Money(0, 'USD');
     }
 
     /**
